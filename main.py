@@ -1,13 +1,24 @@
+from typing import Any
 from client.llm_client import LLMClient
 import asyncio
+import click
 
 
-async def main():
+async def run(messages: dict[str, Any]):
     client = LLMClient()
-    messages = [{"role": "user", "content": "What's up :D"}]
     async for event in client.chat_completion(messages, True):
         print(event)
 
+
+@click.command()
+@click.argument("prompt", required=False)
+def main(
+    prompt: str,
+):
+    print(prompt)
+    messages = [{"role": "user", "content": prompt}]
+    asyncio.run(run(messages))
     print("done")
 
-asyncio.run(main())
+
+main()
