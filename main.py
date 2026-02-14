@@ -1,3 +1,7 @@
+import asyncio
+import sys
+import click
+
 from email import message
 from typing import Any
 
@@ -5,8 +9,6 @@ from agent.agent import Agent
 from agent.events import AgentEventType
 from client.llm_client import LLMClient
 
-import asyncio
-import click
 
 from ui.tui import TUI, get_console
 
@@ -27,9 +29,14 @@ class CLI:
         if not self.agent:
             return None
 
+        assistant_streaming = False
+
         async for event in self.agent.run(message):
             if event.type == AgentEventType.TEXT_DELTA:
                 content = event.data.get("content", "")
+                if not assistant_streaming:
+                    self.tui.begin_assistant()
+                    assistant_streaming = True
                 self.tui.stream_assistant_delta(content)
 
 
@@ -45,8 +52,10 @@ def main(
     cli = CLI()
     # messages = [{"role": "user", "content": prompt}]
 
-    if message:
-        asyncio.run(cli.run_single(prompt))
+    if prompt:
+        result = asyncio.run(cli.run_single(prompt))
+        if result is None:
+            sys.exit(1)
 
 
 main()
