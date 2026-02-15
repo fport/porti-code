@@ -21,6 +21,7 @@ class CLI:
         self.tui = TUI()
 
     async def run_single(self, message: str) -> str | None:
+        self.tui.print_banner()
         async with Agent() as agent:
             self.agent = agent
             return await self._process_message(message)
@@ -30,6 +31,7 @@ class CLI:
             return None
 
         assistant_streaming = False
+        final_response: str | None = None
 
         async for event in self.agent.run(message):
             if event.type == AgentEventType.TEXT_DELTA:
@@ -38,6 +40,17 @@ class CLI:
                     self.tui.begin_assistant()
                     assistant_streaming = True
                 self.tui.stream_assistant_delta(content)
+
+            elif event.type == AgentEventType.TEXT_COMPLETE:
+                final_response = event.data.get("content")
+                if assistant_streaming:
+                    self.tui.end_assistant()
+                    assistant_streaming = False
+            elif event.type == AgentEventType.AGENT_ERROR:
+                error = event.data.get("error", "Unknown error")
+                console.print(f"\n [error]Error: {error}[/error]")
+
+        return final_response
 
 
 async def run(messages: dict[str, Any]):

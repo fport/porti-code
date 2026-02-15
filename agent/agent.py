@@ -13,6 +13,8 @@ class Agent:
         yield AgentEvent.agent_start(message)
         # add user message to context
 
+        final_response: str | None = None
+
         async for event in self._agentic_loop():
             yield event
 
@@ -34,7 +36,6 @@ class Agent:
                     yield AgentEvent.text_delta(content)
             elif event.type == StreamEventType.ERROR:
                 yield AgentEvent.agent_error(event.error or "Unkown error occurred.")
-                return
 
         if response_text:
             yield AgentEvent.text_complete(response_text)

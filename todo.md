@@ -1,0 +1,21 @@
+- [ ] With speech-to-speech capabilities (optional)
+- [ ] One-shot query
+- [ ] Session recording (time-travel debugging)
+- [ ] Resume from recorded session
+- [ ] Hot-Reload
+- [ ] Hot-Reload => Auto-restarts on code changes
+- [ ] Runtime Tools	=> Add/remove tools without restart : manage_tools,install_tools
+- [ ] Auto-RAG => Remembers conversations via Knowledge Base
+- [ ] Multi-Protocol => TCP, WebSocket, MCP, IPC servers
+- [ ] Zenoh P2P	
+- [ ] Unified Mesh	Connect CLI + browser + cloud agents	Auto-starts relay on port 10000
+- [ ] Session Recording
+- [ ] MCP Client => Connect to external MCP servers
+- [ ] State Time-Travel => Save/restore agent state
+- [ ] Ambient Mode => Background thinking when idle
+- [ ] Self-Improvement => Updates own system prompt : system_prompt(action="add_context", ...)
+- [ ] AWS Deploy	
+- [ ] codebase indexing
+- [ ] github integration custom task manager
+- [ ] langfuse
+- [ ] create team 
