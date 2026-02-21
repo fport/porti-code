@@ -16,7 +16,7 @@ def count_tokens(text: str, model: str) -> int:
     if tokenizer:
         return len(tokenizer(text))
 
-    pass
+    return estimate_tokens(text)
 
 
 def estimate_tokens(text: str) -> int:
