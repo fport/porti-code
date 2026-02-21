@@ -1,6 +1,11 @@
-openai
-python-dotenv
 click
-rich
-tiktoken
 pydantic
+tomli
+platformdirs
+openai
+rich
+python-dotenv
+httpx
+ddgs
+fastmcp
+tiktoken
